@@ -5,7 +5,7 @@ const AlreadyExists = require("../errors/AlreadyExists");
 const NotFound = require("../errors/NotFound");
 
 module.exports = {
-  async post(body) {
+  async create(body) {
     return await Characteristics.create(body);
   },
 

@@ -1,12 +1,10 @@
-"use strict";
-
-const Characteristics = require("../Views/Characteristics");
+const PropertyTypes = require("../Views/PropertyTypes");
 
 exports.create = async (req, res, next) => {
   try {
-    let body = req.body;
-    await Characteristics.checkIfExist(body.name);
-    const result = await Characteristics.create(body);
+    const body = req.body;
+    await PropertyTypes.checkIfExist(body.name);
+    const result = await PropertyTypes.create(body);
     res.status(201).send(result);
   } catch (error) {
     next(error);
@@ -15,7 +13,7 @@ exports.create = async (req, res, next) => {
 
 exports.getAll = async (req, res, next) => {
   try {
-    const result = await Characteristics.getAll();
+    const result = await PropertyTypes.getAll();
     res.status(200).send(result);
   } catch (error) {
     next(error);
@@ -25,7 +23,7 @@ exports.getAll = async (req, res, next) => {
 exports.getByID = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const result = await Characteristics.getByID(id);
+    const result = await PropertyTypes.getByID(id);
     res.status(200).send(result);
   } catch (error) {
     next(error);
@@ -35,8 +33,8 @@ exports.getByID = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id;
-    await Characteristics.getByID(id);
-    await Characteristics.delete(id);
+    await PropertyTypes.getByID(id);
+    await PropertyTypes.delete(id);
     res.status(200).end();
   } catch (error) {
     next(error);
@@ -47,8 +45,8 @@ exports.update = async (req, res, next) => {
   try {
     const id = req.params.id;
     const body = req.body;
-    await Characteristics.getByID(id);
-    await Characteristics.update(id, body);
+    await PropertyTypes.getByID(id);
+    await PropertyTypes.update(id, body);
     res.status(204).end();
   } catch (error) {
     next(error);
