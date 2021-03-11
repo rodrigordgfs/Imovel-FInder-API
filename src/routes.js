@@ -104,4 +104,32 @@ routes.post(
   Announcements.create
 );
 
+routes.patch(
+  "/api-imovel-finder/announcements/:id",
+  celebrate({
+    [Segments.BODY]: Joi.object({
+      title: Joi.string().max(70),
+      property_type_id: Joi.number(),
+      price: Joi.number(),
+      useful_area: Joi.number(),
+      gross_area: Joi.number(),
+      contruction_year: Joi.number(),
+      detailed_description: Joi.string(),
+      zipcode: Joi.string().max(15),
+      address: Joi.string().max(150),
+      address_number: Joi.string().max(20),
+      neighborhood: Joi.string().max(50),
+      city: Joi.string().max(50),
+      active: Joi.boolean(),
+    }),
+  }),
+  Announcements.update
+);
+
+routes.get("/api-imovel-finder/announcements/:id", Announcements.getByID);
+
+routes.get("/api-imovel-finder/announcements", Announcements.getAll);
+
+routes.delete("/api-imovel-finder/announcements/:id", Announcements.delete);
+
 module.exports = { routes, errors };
