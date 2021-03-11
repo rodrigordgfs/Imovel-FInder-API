@@ -8,5 +8,5 @@ module.exports = {
     timestamp: true,
     underscored: true,
   },
-  timezone: "America/Sao_Paulo",
+  timezone: "-3:00",
 };

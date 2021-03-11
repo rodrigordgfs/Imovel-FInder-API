@@ -1,5 +1,4 @@
 "use strict";
-
 const { Model, DataTypes } = require("sequelize");
 
 class PropertyTypes extends Model {
@@ -12,9 +11,16 @@ class PropertyTypes extends Model {
       },
       {
         sequelize,
-        tableName: "tb_property_types",
+        tableName: "propertytypes",
       }
     );
+  }
+
+  static associate(models) {
+    this.hasMany(models.Announcements, {
+      foreignKey: "property_type_id",
+      as: "property_type",
+    });
   }
 }
 

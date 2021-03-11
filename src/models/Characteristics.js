@@ -10,7 +10,7 @@ class Characteristics extends Model {
       },
       {
         sequelize,
-        tableName: "tb_characteristics",
+        tableName: "characteristics",
       }
     );
   }
