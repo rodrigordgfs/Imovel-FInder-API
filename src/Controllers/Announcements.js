@@ -1,4 +1,5 @@
 const Announcements = require("../Views/Announcements");
+const Characteristic = require("../Views/Characteristics");
 
 exports.create = async (req, res, next) => {
   try {
@@ -47,6 +48,34 @@ exports.update = async (req, res, next) => {
     await Announcements.getByID(id);
     await Announcements.update(id, body);
     res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.linkCharacteristic = async (req, res, next) => {
+  try {
+    const announcement_id = req.params.id;
+    const characteristic_id = req.body.characteristic_id;
+    let announcement = await Announcements.getByID(announcement_id);
+    const characteristic = await Characteristic.getByID(characteristic_id);
+    await announcement.addCharacteristic(characteristic);
+    announcement = await Announcements.getByID(announcement_id);
+    res.status(201).send(announcement);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.unlinkCharacteristic = async (req, res, next) => {
+  try {
+    const announcement_id = req.params.announcement_id;
+    const characteristic_id = req.params.characteristic_id;
+    let announcement = await Announcements.getByID(announcement_id);
+    const characteristic = await Characteristic.getByID(characteristic_id);
+    await announcement.removeCharacteristic(characteristic);
+    announcement = await Announcements.getByID(announcement_id);
+    res.status(201).send(announcement);
   } catch (error) {
     next(error);
   }

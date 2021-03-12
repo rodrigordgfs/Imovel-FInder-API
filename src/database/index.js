@@ -13,5 +13,6 @@ Announcements.init(connection);
 
 PropertyTypes.associate(connection.models);
 Announcements.associate(connection.models);
+Characteristics.associate(connection.models);
 
 module.exports = connection;

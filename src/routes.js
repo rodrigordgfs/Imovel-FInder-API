@@ -4,7 +4,7 @@ const { celebrate, Joi, errors, Segments } = require("celebrate");
 
 const CharacteristicsController = require("./Controllers/Characteristics");
 const PropertyTypesController = require("./Controllers/PropertyTypes");
-const Announcements = require("./Controllers/Announcements");
+const AnnouncementsController = require("./Controllers/Announcements");
 
 // CHARACTERISTICS
 routes.post(
@@ -101,7 +101,7 @@ routes.post(
       active: Joi.boolean().default(true),
     }),
   }),
-  Announcements.create
+  AnnouncementsController.create
 );
 
 routes.patch(
@@ -123,13 +123,35 @@ routes.patch(
       active: Joi.boolean(),
     }),
   }),
-  Announcements.update
+  AnnouncementsController.update
 );
 
-routes.get("/api-imovel-finder/announcements/:id", Announcements.getByID);
+routes.get(
+  "/api-imovel-finder/announcements/:id",
+  AnnouncementsController.getByID
+);
 
-routes.get("/api-imovel-finder/announcements", Announcements.getAll);
+routes.get("/api-imovel-finder/announcements", AnnouncementsController.getAll);
 
-routes.delete("/api-imovel-finder/announcements/:id", Announcements.delete);
+routes.delete(
+  "/api-imovel-finder/announcements/:id",
+  AnnouncementsController.delete
+);
+
+// ANNOUNCEMENTS CHARACTERISTICS
+routes.post(
+  "/api-imovel-finder/announcements/:id/characteristic",
+  celebrate({
+    [Segments.BODY]: Joi.object({
+      characteristic_id: Joi.number().required(),
+    }),
+  }),
+  AnnouncementsController.linkCharacteristic
+);
+
+routes.delete(
+  "/api-imovel-finder/announcements/:announcement_id/characteristic/:characteristic_id",
+  AnnouncementsController.unlinkCharacteristic
+);
 
 module.exports = { routes, errors };

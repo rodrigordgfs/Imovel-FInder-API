@@ -10,7 +10,7 @@ module.exports = {
   },
 
   async checkIfExist(name) {
-    const result = Characteristics.findOne({ where: { name: name } });
+    const result = await Characteristics.findOne({ where: { name: name } });
     if (result) {
       throw new AlreadyExists("Characteristic already exists.");
     }

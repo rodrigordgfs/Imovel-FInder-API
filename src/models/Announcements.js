@@ -30,6 +30,11 @@ class Announcements extends Model {
       foreignKey: "property_type_id",
       as: "property_type",
     });
+    this.belongsToMany(models.Characteristics, {
+      foreignKey: "announcement_id",
+      through: "announcements_characteristics",
+      as: "characteristics",
+    });
   }
 }
 

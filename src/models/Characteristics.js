@@ -14,6 +14,14 @@ class Characteristics extends Model {
       }
     );
   }
+
+  static associate(models) {
+    this.belongsToMany(models.Announcements, {
+      foreignKey: "characteristic_id",
+      through: "announcements_characteristics",
+      as: "announcements",
+    });
+  }
 }
 
 module.exports = Characteristics;

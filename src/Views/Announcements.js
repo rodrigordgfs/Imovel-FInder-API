@@ -25,10 +25,17 @@ module.exports = {
         "neighborhood",
         "city",
       ],
-      include: {
-        association: "property_type",
-        attributes: ["id", "name", "icon"],
-      },
+      include: [
+        {
+          association: "property_type",
+          attributes: ["id", "name", "icon"],
+        },
+        {
+          association: "characteristics",
+          attributes: ["id", "name"],
+          through: { attributes: [] },
+        },
+      ],
     });
     if (!result) {
       throw new NotFound("Announcement not found.");
@@ -52,10 +59,17 @@ module.exports = {
         "neighborhood",
         "city",
       ],
-      include: {
-        association: "property_type",
-        attributes: ["id", "name", "icon"],
-      },
+      include: [
+        {
+          association: "property_type",
+          attributes: ["id", "name", "icon"],
+        },
+        {
+          association: "characteristics",
+          attributes: ["id", "name"],
+          through: { attributes: [] },
+        },
+      ],
     });
   },
 
