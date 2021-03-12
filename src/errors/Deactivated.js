@@ -1,3 +1,5 @@
+"use strict";
+
 class Deactivated extends Error {
   constructor(data) {
     super(`${data} desativado(a).`);

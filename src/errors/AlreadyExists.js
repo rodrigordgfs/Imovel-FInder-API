@@ -1,3 +1,4 @@
+"use strict";
 class AlreadyExists extends Error {
   constructor(message) {
     super(message);

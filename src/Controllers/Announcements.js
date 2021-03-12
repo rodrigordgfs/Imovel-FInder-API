@@ -1,3 +1,5 @@
+"use strict";
+
 const Announcements = require("../Views/Announcements");
 const Characteristic = require("../Views/Characteristics");
 

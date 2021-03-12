@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = {
   dialect: "mysql",
   host: "localhost",

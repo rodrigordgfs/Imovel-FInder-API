@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const routes = express.Router();
 const { celebrate, Joi, errors, Segments } = require("celebrate");
@@ -6,6 +8,7 @@ const CharacteristicsController = require("./Controllers/Characteristics");
 const PropertyTypesController = require("./Controllers/PropertyTypes");
 const AnnouncementsController = require("./Controllers/Announcements");
 const AnnouncementPhotoController = require("./Controllers/AnnouncementPhotos");
+const AnnouncementContactsController = require("./Controllers/AnnouncementContacts");
 
 // CHARACTERISTICS
 routes.post(
@@ -169,6 +172,33 @@ routes.post(
 routes.delete(
   "/api-imovel-finder/announcements/:announcement_id/photo/:announcement_photo_id",
   AnnouncementPhotoController.delete
+);
+
+// ANNOUNCEMENTS CONTACT
+routes.post(
+  "/api-imovel-finder/announcements/:announcement_id/contact",
+  celebrate({
+    [Segments.BODY]: Joi.object({
+      full_name: Joi.string().max(60).required(),
+      email: Joi.string().email().max(100).required(),
+      phone: Joi.string().max(14).required(),
+      has_whatsapp: Joi.boolean().required(),
+    }),
+  }),
+  AnnouncementContactsController.create
+);
+
+routes.patch(
+  "/api-imovel-finder/announcements/:announcement_id/contact",
+  celebrate({
+    [Segments.BODY]: Joi.object({
+      full_name: Joi.string().max(60),
+      email: Joi.string().email().max(100),
+      phone: Joi.string().max(14),
+      has_whatsapp: Joi.boolean(),
+    }),
+  }),
+  AnnouncementContactsController.update
 );
 
 module.exports = { routes, errors };

@@ -4,40 +4,38 @@ const Characteristics = require("../models/Characteristics");
 const AlreadyExists = require("../errors/AlreadyExists");
 const NotFound = require("../errors/NotFound");
 
-module.exports = {
-  async create(body) {
-    return await Characteristics.create(body);
-  },
+exports.create = async (body) => {
+  return await Characteristics.create(body);
+};
 
-  async checkIfExist(name) {
-    const result = await Characteristics.findOne({ where: { name: name } });
-    if (result) {
-      throw new AlreadyExists("Characteristic already exists.");
-    }
-  },
+exports.getAll = async () => {
+  return await Characteristics.findAll({
+    where: { active: true },
+    attributes: ["id", "name"],
+  });
+};
 
-  async getAll() {
-    return await Characteristics.findAll({
-      where: { active: true },
-      attributes: ["id", "name"],
-    });
-  },
+exports.checkIfExist = async (name) => {
+  const result = await Characteristics.findOne({ where: { name: name } });
+  if (result) {
+    throw new AlreadyExists("Characteristic already exists.");
+  }
+};
 
-  async getByID(id) {
-    const result = await Characteristics.findByPk(id, {
-      attributes: ["id", "name"],
-    });
-    if (!result) {
-      throw new NotFound("Characteristic not found.");
-    }
-    return result;
-  },
+exports.getByID = async (id) => {
+  const result = await Characteristics.findByPk(id, {
+    attributes: ["id", "name"],
+  });
+  if (!result) {
+    throw new NotFound("Characteristic not found.");
+  }
+  return result;
+};
 
-  async delete(id) {
-    return await Characteristics.destroy({ where: { id } });
-  },
+exports.delete = async (id) => {
+  return await Characteristics.destroy({ where: { id } });
+};
 
-  async update(id, body) {
-    return await Characteristics.update(body, { where: { id } });
-  },
+exports.update = async (id, body) => {
+  return await Characteristics.update(body, { where: { id } });
 };

@@ -1,3 +1,5 @@
+"use strict";
+
 const PropertyTypes = require("../Views/PropertyTypes");
 
 exports.create = async (req, res, next) => {

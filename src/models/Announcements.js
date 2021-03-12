@@ -39,6 +39,10 @@ class Announcements extends Model {
       foreignKey: "announcement_id",
       as: "photos",
     });
+    this.hasOne(models.AnnouncementContacts, {
+      foreignKey: "announcement_id",
+      as: "contact",
+    });
   }
 }
 
