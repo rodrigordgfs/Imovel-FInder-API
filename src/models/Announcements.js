@@ -35,6 +35,10 @@ class Announcements extends Model {
       through: "announcements_characteristics",
       as: "characteristics",
     });
+    this.hasMany(models.AnnouncementPhotos, {
+      foreignKey: "announcement_id",
+      as: "photos",
+    });
   }
 }
 

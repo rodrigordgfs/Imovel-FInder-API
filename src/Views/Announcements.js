@@ -1,6 +1,5 @@
 const Announcements = require("../models/Announcements");
 const NotFound = require("../errors/NotFound");
-const { getAll } = require("./Characteristics");
 
 module.exports = {
   async create(body) {
@@ -35,6 +34,10 @@ module.exports = {
           attributes: ["id", "name"],
           through: { attributes: [] },
         },
+        {
+          association: "photos",
+          attributes: ["id", "url"],
+        },
       ],
     });
     if (!result) {
@@ -68,6 +71,10 @@ module.exports = {
           association: "characteristics",
           attributes: ["id", "name"],
           through: { attributes: [] },
+        },
+        {
+          association: "photos",
+          attributes: ["id", "url"],
         },
       ],
     });

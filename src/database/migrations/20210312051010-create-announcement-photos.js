@@ -2,24 +2,23 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("property_types", {
+    await queryInterface.createTable("announcement_photos", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      name: {
+      url: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      icon: {
-        type: Sequelize.STRING,
+      announcement_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      active: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: true,
+        references: { model: "announcements", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       created_at: {
         type: Sequelize.DATE,
@@ -33,6 +32,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("property_types");
+    await queryInterface.dropTable("announcement_photos");
   },
 };

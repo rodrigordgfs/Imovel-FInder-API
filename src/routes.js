@@ -5,6 +5,7 @@ const { celebrate, Joi, errors, Segments } = require("celebrate");
 const CharacteristicsController = require("./Controllers/Characteristics");
 const PropertyTypesController = require("./Controllers/PropertyTypes");
 const AnnouncementsController = require("./Controllers/Announcements");
+const AnnouncementPhotoController = require("./Controllers/AnnouncementPhotos");
 
 // CHARACTERISTICS
 routes.post(
@@ -152,6 +153,22 @@ routes.post(
 routes.delete(
   "/api-imovel-finder/announcements/:announcement_id/characteristic/:characteristic_id",
   AnnouncementsController.unlinkCharacteristic
+);
+
+// ANNOUNCEMENT PHOTOS
+routes.post(
+  "/api-imovel-finder/announcements/:announcement_id/photo",
+  celebrate({
+    [Segments.BODY]: Joi.object({
+      url: Joi.string().uri().required(),
+    }),
+  }),
+  AnnouncementPhotoController.create
+);
+
+routes.delete(
+  "/api-imovel-finder/announcements/:announcement_id/photo/:announcement_photo_id",
+  AnnouncementPhotoController.delete
 );
 
 module.exports = { routes, errors };
