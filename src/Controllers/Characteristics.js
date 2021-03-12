@@ -5,7 +5,6 @@ const Characteristics = require("../Views/Characteristics");
 exports.create = async (req, res, next) => {
   try {
     let body = req.body;
-    await Characteristics.checkIfExist(body.name);
     const result = await Characteristics.create(body);
     res.status(201).send(result);
   } catch (error) {
@@ -35,7 +34,6 @@ exports.getByID = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id;
-    await Characteristics.getByID(id);
     await Characteristics.delete(id);
     res.status(200).end();
   } catch (error) {
@@ -47,7 +45,6 @@ exports.update = async (req, res, next) => {
   try {
     const id = req.params.id;
     const body = req.body;
-    await Characteristics.getByID(id);
     await Characteristics.update(id, body);
     res.status(204).end();
   } catch (error) {

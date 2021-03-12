@@ -27,6 +27,10 @@ exports.getByID = async (id) => {
     ],
     include: [
       {
+        association: "user",
+        attributes: ["id", "full_name", "email"],
+      },
+      {
         association: "contact",
         attributes: ["full_name", "email", "phone", "has_whatsapp"],
       },
@@ -69,6 +73,10 @@ exports.getAll = async () => {
     ],
     include: [
       {
+        association: "user",
+        attributes: ["id", "full_name", "email"],
+      },
+      {
         association: "contact",
         attributes: ["full_name", "email", "phone", "has_whatsapp"],
       },
@@ -90,9 +98,11 @@ exports.getAll = async () => {
 };
 
 exports.delete = async (id) => {
+  awaitthis.getByID(id);
   return await Announcements.destroy({ where: { id } });
 };
 
 exports.update = async (id, body) => {
+  await this.getByID(id);
   return await Announcements.update(body, { where: { id } });
 };

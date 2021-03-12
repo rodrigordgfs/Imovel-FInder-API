@@ -30,6 +30,10 @@ class Announcements extends Model {
       foreignKey: "property_type_id",
       as: "property_type",
     });
+    this.belongsTo(models.Users, {
+      foreignKey: "user_id",
+      as: "user",
+    });
     this.belongsToMany(models.Characteristics, {
       foreignKey: "announcement_id",
       through: "announcements_characteristics",

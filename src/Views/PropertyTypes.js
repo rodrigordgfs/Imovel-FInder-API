@@ -5,6 +5,7 @@ const AlreadyExists = require("../errors/AlreadyExists");
 const NotFound = require("../errors/NotFound");
 
 exports.create = async (body) => {
+  await this.checkIfExist(body.name);
   return await PropertyTypes.create(body);
 };
 
@@ -33,9 +34,11 @@ exports.getByID = async (id) => {
 };
 
 exports.delete = async (id) => {
+  await this.getByID(id);
   return await PropertyTypes.destroy({ where: { id } });
 };
 
 exports.update = async (id, body) => {
+  await this.getByID(id);
   return await PropertyTypes.update(body, { where: { id } });
 };

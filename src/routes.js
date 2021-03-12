@@ -9,6 +9,7 @@ const PropertyTypesController = require("./Controllers/PropertyTypes");
 const AnnouncementsController = require("./Controllers/Announcements");
 const AnnouncementPhotoController = require("./Controllers/AnnouncementPhotos");
 const AnnouncementContactsController = require("./Controllers/AnnouncementContacts");
+const UsersController = require("./Controllers/Users");
 
 // CHARACTERISTICS
 routes.post(
@@ -200,5 +201,31 @@ routes.patch(
   }),
   AnnouncementContactsController.update
 );
+
+routes.post(
+  "/api-imovel-finder/users",
+  celebrate({
+    [Segments.BODY]: Joi.object({
+      email: Joi.string().email().max(100).required(),
+      password: Joi.string().max(50).required(),
+      full_name: Joi.string().max(100).required(),
+    }),
+  }),
+  UsersController.create
+);
+
+routes.patch(
+  "/api-imovel-finder/users/:id",
+  celebrate({
+    [Segments.BODY]: Joi.object({
+      email: Joi.string().email().max(100),
+      password: Joi.string().max(50),
+      full_name: Joi.string().max(100),
+    }),
+  }),
+  UsersController.update
+);
+
+routes.get("/api-imovel-finder/users/:id", UsersController.getByID);
 
 module.exports = { routes, errors };

@@ -35,7 +35,6 @@ exports.getAll = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const id = req.params.id;
-    await Announcements.getByID(id);
     await Announcements.delete(id);
     res.status(200).end();
   } catch (error) {
@@ -47,7 +46,6 @@ exports.update = async (req, res, next) => {
   try {
     const id = req.params.id;
     const body = req.body;
-    await Announcements.getByID(id);
     await Announcements.update(id, body);
     res.status(204).end();
   } catch (error) {
