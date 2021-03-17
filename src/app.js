@@ -11,8 +11,8 @@ const AlreadyExists = require("./errors/AlreadyExists");
 const NotFound = require("./errors/NotFound");
 const Deativated = require("./errors/Deactivated");
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(routes);
 app.use(errors());
 

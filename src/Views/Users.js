@@ -2,12 +2,28 @@ const Users = require("../models/Users");
 const AlreadyExists = require("../errors/AlreadyExists");
 const NotFound = require("../errors/NotFound");
 
+const bcrypt = require("bcrypt");
+const apiConfig = require("../config/api");
+
+function generateHashPassword(password) {
+  const coustHash = apiConfig.coustHAsh;
+  return bcrypt.hash(password, coustHash);
+}
+
 exports.create = async (body) => {
+  const password = body.password;
+  body.password = await generateHashPassword(password);
   await this.checkIfExists(body.email);
-  return await Users.create(body);
+  const result = await Users.create(body);
+  delete result.dataValues.password;
+  return result;
 };
 
 exports.update = async (id, body) => {
+  if (body.password) {
+    const password = body.password;
+    body.password = await generateHashPassword(password);
+  }
   await this.getByID(id);
   return await Users.update(body, { where: { id } });
 };

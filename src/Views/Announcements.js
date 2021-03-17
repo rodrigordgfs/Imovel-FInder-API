@@ -98,7 +98,7 @@ exports.getAll = async () => {
 };
 
 exports.delete = async (id) => {
-  awaitthis.getByID(id);
+  await this.getByID(id);
   return await Announcements.destroy({ where: { id } });
 };
 

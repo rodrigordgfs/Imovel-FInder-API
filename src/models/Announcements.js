@@ -21,6 +21,7 @@ class Announcements extends Model {
       {
         sequelize,
         tableName: "announcements",
+        paranoid: true,
       }
     );
   }

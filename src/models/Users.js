@@ -6,7 +6,7 @@ class Users extends Model {
     super.init(
       {
         email: DataTypes.STRING(100),
-        password: DataTypes.STRING(50),
+        password: DataTypes.STRING,
         full_name: DataTypes.STRING(100),
       },
       {
