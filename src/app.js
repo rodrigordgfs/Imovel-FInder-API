@@ -1,12 +1,13 @@
 "use strict";
 
+require("dotenv").config();
+
 const express = require("express");
-const bodyParser = require("body-parser");
 
 const app = express();
 
 const { routes, errors } = require("./routes");
-const AuthenticationStrategy = require("./Services/AuthenticationStrategy");
+const { AuthenticationStrategy, AuthorizationStrategy } = require("./Services");
 
 const AlreadyExists = require("./errors/AlreadyExists");
 const NotFound = require("./errors/NotFound");

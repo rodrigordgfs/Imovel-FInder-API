@@ -3,9 +3,8 @@
 const app = require("../src/app");
 const http = require("http");
 const debug = require("debug")("shinodalabs:server");
-const apiConfig = require("../src/config/api");
 
-const port = normalizePort(apiConfig.port || "3000");
+const port = normalizePort(Number(process.env.PORT) || 3000);
 app.set("port", port);
 
 require("../src/database");

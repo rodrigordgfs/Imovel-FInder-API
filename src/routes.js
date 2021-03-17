@@ -16,6 +16,7 @@ const UsersController = require("./Controllers/Users");
 routes
   .post(
     "/api-imovel-finder/characteristics",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string().required(),
@@ -24,17 +25,24 @@ routes
     }),
     CharacteristicsController.create
   )
-  .get("/api-imovel-finder/characteristics", CharacteristicsController.getAll)
+  .get(
+    "/api-imovel-finder/characteristics",
+    passport.authenticate("bearer", { session: false }),
+    CharacteristicsController.getAll
+  )
   .get(
     "/api-imovel-finder/characteristics/:id",
+    passport.authenticate("bearer", { session: false }),
     CharacteristicsController.getByID
   )
   .delete(
     "/api-imovel-finder/characteristics/:id",
+    passport.authenticate("bearer", { session: false }),
     CharacteristicsController.delete
   )
   .patch(
     "/api-imovel-finder/characteristics/:id",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string(),
@@ -48,6 +56,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/property-types",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string().required(),
@@ -57,14 +66,24 @@ routes
     }),
     PropertyTypesController.create
   )
-  .get("/api-imovel-finder/property-types", PropertyTypesController.getAll)
-  .get("/api-imovel-finder/property-types/:id", PropertyTypesController.getByID)
+  .get(
+    "/api-imovel-finder/property-types",
+    passport.authenticate("bearer", { session: false }),
+    PropertyTypesController.getAll
+  )
+  .get(
+    "/api-imovel-finder/property-types/:id",
+    passport.authenticate("bearer", { session: false }),
+    PropertyTypesController.getByID
+  )
   .delete(
     "/api-imovel-finder/property-types/:id",
+    passport.authenticate("bearer", { session: false }),
     PropertyTypesController.delete
   )
   .patch(
     "/api-imovel-finder/property-types/:id",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string(),
@@ -79,6 +98,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/announcements",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         title: Joi.string().max(70).required(),
@@ -100,6 +120,7 @@ routes
   )
   .patch(
     "/api-imovel-finder/announcements/:id",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         title: Joi.string().max(70),
@@ -119,10 +140,19 @@ routes
     }),
     AnnouncementsController.update
   )
-  .get("/api-imovel-finder/announcements/:id", AnnouncementsController.getByID)
-  .get("/api-imovel-finder/announcements", AnnouncementsController.getAll)
+  .get(
+    "/api-imovel-finder/announcements/:id",
+    passport.authenticate("bearer", { session: false }),
+    AnnouncementsController.getByID
+  )
+  .get(
+    "/api-imovel-finder/announcements",
+    passport.authenticate("bearer", { session: false }),
+    AnnouncementsController.getAll
+  )
   .delete(
     "/api-imovel-finder/announcements/:id",
+    passport.authenticate("bearer", { session: false }),
     AnnouncementsController.delete
   );
 
@@ -130,6 +160,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/announcements/:id/characteristic",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         characteristic_id: Joi.number().required(),
@@ -139,6 +170,7 @@ routes
   )
   .delete(
     "/api-imovel-finder/announcements/:announcement_id/characteristic/:characteristic_id",
+    passport.authenticate("bearer", { session: false }),
     AnnouncementsController.unlinkCharacteristic
   );
 
@@ -146,6 +178,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/announcements/:announcement_id/photo",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         url: Joi.string().uri().required(),
@@ -155,6 +188,7 @@ routes
   )
   .delete(
     "/api-imovel-finder/announcements/:announcement_id/photo/:announcement_photo_id",
+    passport.authenticate("bearer", { session: false }),
     AnnouncementPhotoController.delete
   );
 
@@ -162,6 +196,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/announcements/:announcement_id/contact",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         full_name: Joi.string().max(60).required(),
@@ -174,6 +209,7 @@ routes
   )
   .patch(
     "/api-imovel-finder/announcements/:announcement_id/contact",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         full_name: Joi.string().max(60),
@@ -205,6 +241,7 @@ routes
   )
   .patch(
     "/api-imovel-finder/users/:id",
+    passport.authenticate("bearer", { session: false }),
     celebrate({
       [Segments.BODY]: Joi.object({
         email: Joi.string().email().max(100),
@@ -214,6 +251,10 @@ routes
     }),
     UsersController.update
   )
-  .get("/api-imovel-finder/users/:id", UsersController.getByID);
+  .get(
+    "/api-imovel-finder/users/:id",
+    passport.authenticate("bearer", { session: false }),
+    UsersController.getByID
+  );
 
 module.exports = { routes, errors };

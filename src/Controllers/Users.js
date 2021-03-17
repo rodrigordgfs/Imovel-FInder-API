@@ -1,10 +1,20 @@
 const Users = require("../Views/Users");
+const jwt = require("jsonwebtoken");
+
+function generateTokenJWT(user) {
+  const payload = {
+    id: user.id,
+  };
+  const token = jwt.sign(payload, process.env.CHAVE_JWT);
+  return token;
+}
 
 exports.create = async (req, res, next) => {
   try {
     const body = req.body;
     const result = await Users.create(body);
-    res.status(201).send(result);
+    const token = generateTokenJWT(result.id);
+    res.set("Authorization", token).status(201).send(result);
   } catch (error) {
     next(error);
   }
@@ -32,5 +42,6 @@ exports.getByID = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  res.status(204).end();
+  const token = generateTokenJWT(req.user);
+  res.set("Authorization", token).status(204).end();
 };

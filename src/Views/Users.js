@@ -3,10 +3,9 @@ const AlreadyExists = require("../errors/AlreadyExists");
 const NotFound = require("../errors/NotFound");
 
 const bcrypt = require("bcrypt");
-const apiConfig = require("../config/api");
 
 function generateHashPassword(password) {
-  const coustHash = apiConfig.coustHAsh;
+  const coustHash = Number(process.env.COUST_HASH);
   return bcrypt.hash(password, coustHash);
 }
 

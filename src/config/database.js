@@ -1,14 +1,14 @@
 "use strict";
 
 module.exports = {
-  dialect: "mysql",
-  host: "localhost",
-  database: "imovel-finder-api",
-  username: "root",
-  password: "",
+  dialect: process.env.DIALECT_DB || "mysql",
+  host: process.env.HOST_DB || "localhost",
+  database: process.env.DATABASE_DB || "imovel-finder-api",
+  username: process.env.USERNAME_DB || "root",
+  password: process.env.PASSWORD_DB || "",
   define: {
     timestamp: true,
     underscored: true,
   },
-  timezone: "-3:00",
+  timezone: process.env.TIMEZONE_DB || "-3:00",
 };
