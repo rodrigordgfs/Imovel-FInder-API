@@ -12,17 +12,19 @@ function generateHashPassword(password) {
 
 exports.create = async (body) => {
   const password = body.password;
-  body.password = await generateHashPassword(password);
+  body.password_hash = await generateHashPassword(password);
+  delete body.password;
   await this.checkIfExists(body.email);
   const result = await Users.create(body);
-  delete result.dataValues.password;
+  delete result.dataValues.password_hash;
   return result;
 };
 
 exports.update = async (id, body) => {
   if (body.password) {
     const password = body.password;
-    body.password = await generateHashPassword(password);
+    delete body.password;
+    body.password_hash = await generateHashPassword(password);
   }
   await this.getByID(id);
   return await Users.update(body, { where: { id } });

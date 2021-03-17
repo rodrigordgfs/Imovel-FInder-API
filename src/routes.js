@@ -2,6 +2,7 @@
 
 const express = require("express");
 const routes = express.Router();
+const passport = require("passport");
 const { celebrate, Joi, errors, Segments } = require("celebrate");
 
 const CharacteristicsController = require("./Controllers/Characteristics");
@@ -142,20 +143,20 @@ routes
   );
 
 // ANNOUNCEMENT PHOTOS
-routes.post(
-  "/api-imovel-finder/announcements/:announcement_id/photo",
-  celebrate({
-    [Segments.BODY]: Joi.object({
-      url: Joi.string().uri().required(),
+routes
+  .post(
+    "/api-imovel-finder/announcements/:announcement_id/photo",
+    celebrate({
+      [Segments.BODY]: Joi.object({
+        url: Joi.string().uri().required(),
+      }),
     }),
-  }),
-  AnnouncementPhotoController.create
-);
-
-routes.delete(
-  "/api-imovel-finder/announcements/:announcement_id/photo/:announcement_photo_id",
-  AnnouncementPhotoController.delete
-);
+    AnnouncementPhotoController.create
+  )
+  .delete(
+    "/api-imovel-finder/announcements/:announcement_id/photo/:announcement_photo_id",
+    AnnouncementPhotoController.delete
+  );
 
 // ANNOUNCEMENTS CONTACT
 routes
@@ -182,7 +183,10 @@ routes
       }),
     }),
     AnnouncementContactsController.update
-  )
+  );
+
+// USERS
+routes
   .post(
     "/api-imovel-finder/users",
     celebrate({
@@ -193,6 +197,11 @@ routes
       }),
     }),
     UsersController.create
+  )
+  .post(
+    "/api-imovel-finder/users/login",
+    passport.authenticate("local", { session: false }),
+    UsersController.login
   )
   .patch(
     "/api-imovel-finder/users/:id",

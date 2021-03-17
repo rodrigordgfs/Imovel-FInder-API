@@ -4,7 +4,7 @@ class Deactivated extends Error {
   constructor(data) {
     super(`${data} desativado(a).`);
     this.name = "Deactivated";
-    this.id = 3;
+    this.id = 2;
   }
 }
 

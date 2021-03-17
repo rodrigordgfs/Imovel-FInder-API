@@ -30,3 +30,7 @@ exports.getByID = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.login = async (req, res, next) => {
+  res.status(204).end();
+};
