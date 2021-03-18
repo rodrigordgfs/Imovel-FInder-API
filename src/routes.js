@@ -239,6 +239,11 @@ routes
     passport.authenticate("local", { session: false }),
     UsersController.login
   )
+  .post(
+    "/api-imovel-finder/users/logout/:id",
+    passport.authenticate("bearer", { session: false }),
+    UsersController.logout
+  )
   .patch(
     "/api-imovel-finder/users/:id",
     passport.authenticate("bearer", { session: false }),
