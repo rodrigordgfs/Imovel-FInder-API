@@ -6,8 +6,6 @@ const express = require("express");
 
 const app = express();
 
-require("./redis/blacklist");
-
 const { routes, errors } = require("./routes");
 const { AuthenticationStrategy, AuthorizationStrategy } = require("./Services");
 

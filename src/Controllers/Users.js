@@ -1,12 +1,11 @@
 const Users = require("../Views/Users");
 const jwt = require("jsonwebtoken");
-const blacklist = require("../redis/manipulatesBlacklist");
 
 function generateTokenJWT(user) {
   const payload = {
     id: user.id,
   };
-  const token = jwt.sign(payload, process.env.CHAVE_JWT, { expiresIn: "15m" });
+  const token = jwt.sign(payload, process.env.CHAVE_JWT, { expiresIn: "30d" });
   return token;
 }
 
@@ -54,7 +53,6 @@ exports.login = async (req, res, next) => {
 exports.logout = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    await blacklist.add(token);
     res.status(200).end();
   } catch (error) {
     next(error);
