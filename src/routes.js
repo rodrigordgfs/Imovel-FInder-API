@@ -260,6 +260,10 @@ routes
     "/api-imovel-finder/users/:id",
     passport.authenticate("bearer", { session: false }),
     UsersController.getByID
+  )
+  .get(
+    "/api-imovel-finder/users/verify-email/:id",
+    UsersController.updateVerifiedEmail
   );
 
 module.exports = { routes, errors };

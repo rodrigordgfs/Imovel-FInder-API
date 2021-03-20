@@ -38,10 +38,22 @@ exports.checkIfExists = async (email) => {
 
 exports.getByID = async (id) => {
   const result = await Users.findByPk(id, {
-    attributes: ["id", "email", "full_name"],
+    attributes: ["id", "email", "full_name", "email_verified"],
   });
   if (!result) {
     throw new NotFound("User not found.");
   }
   return result;
+};
+
+exports.verifyEmail = async (id) => {
+  const isEmailVerified = await Users.findByPk(id, {
+    attributes: ["email_verified"],
+  });
+  console.log(isEmailVerified);
+  if (isEmailVerified.email_verified) {
+    throw new AlreadyExists("Email already verified");
+  }
+  const body = { email_verified: true };
+  return await Users.update(body, { where: { id } });
 };
