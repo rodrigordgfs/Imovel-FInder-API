@@ -1,6 +1,7 @@
 const Users = require("../Views/Users");
 const jwt = require("jsonwebtoken");
 const { EmailVerification } = require("../Services/Emails");
+const { SMSVerification } = require("../Services/SMS");
 
 function generateTokenJWT(user) {
   const payload = {
@@ -23,6 +24,8 @@ exports.create = async (req, res, next) => {
     const token = generateTokenJWT(result.id);
     const email = new EmailVerification(result);
     email.sendEmail().catch(console.log);
+    const sms = new SMSVerification(result);
+    sms.sendSMS().catch(console.log());
     delete result.dataValues.code_verification;
     res.set("Authorization", token).status(201).send(result);
   } catch (error) {
