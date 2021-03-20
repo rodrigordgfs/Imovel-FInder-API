@@ -1,12 +1,12 @@
 const Users = require("../Views/Users");
 const jwt = require("jsonwebtoken");
-const { EmailVerification } = require("../Services/Emails");
+const {EmailVerification} = require("../Services/Emails");
 
 function generateTokenJWT(user) {
   const payload = {
-    id: user.id,
+    id : user.id,
   };
-  const token = jwt.sign(payload, process.env.CHAVE_JWT, { expiresIn: "30d" });
+  const token = jwt.sign(payload, process.env.CHAVE_JWT, {expiresIn : "30d"});
   return token;
 }
 
@@ -18,7 +18,7 @@ exports.create = async (req, res, next) => {
   try {
     let body = req.body;
     const code = generateRandomCode();
-    body = Object.assign({}, body, { code_verification: code });
+    body = Object.assign({}, body, {code_verification : code});
     const result = await Users.create(body);
     const token = generateTokenJWT(result.id);
     const email = new EmailVerification(result);
@@ -74,7 +74,7 @@ exports.updateVerifiedEmail = async (req, res, next) => {
     const id = req.params.id;
     const code = req.body.code;
     await Users.verifyEmail(id, code);
-    res.status(200).send({ message: "Email verified succesfully!" });
+    res.status(200).send({message : "Email verified succesfully!"});
   } catch (error) {
     next(error);
   }
