@@ -48,7 +48,7 @@ exports.getByID = async (id) => {
 
 exports.verifyEmail = async (id, code) => {
   const user = await Users.findByPk(id, {
-    attributes: ["email_verified", 'code_verification'],
+    attributes: ["email_verified", "code_verification"],
   });
   if (user.email_verified) {
     throw new AlreadyExists("Email already verified");

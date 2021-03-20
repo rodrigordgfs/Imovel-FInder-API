@@ -9,6 +9,7 @@ class Users extends Model {
         password_hash: DataTypes.STRING,
         full_name: DataTypes.STRING(100),
         email_verified: DataTypes.BOOLEAN,
+        code_verification: DataTypes.NUMBER,
       },
       {
         sequelize,

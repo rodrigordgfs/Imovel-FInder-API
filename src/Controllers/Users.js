@@ -16,13 +16,15 @@ function generateRandomCode() {
 
 exports.create = async (req, res, next) => {
   try {
-    const body = req.body;
+    let body = req.body;
     const code = generateRandomCode();
-    Object.assign({}, body, { code_verification: code });
+    body = Object.assign({}, body, { code_verification: code });
+    console.log(body);
     const result = await Users.create(body);
     const token = generateTokenJWT(result.id);
     const email = new EmailVerification(result);
     email.sendEmail().catch(console.log);
+    delete result.dataValues.code_verification;
     res.set("Authorization", token).status(201).send(result);
   } catch (error) {
     next(error);
@@ -71,7 +73,7 @@ exports.logout = async (req, res, next) => {
 exports.updateVerifiedEmail = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const code = req.body.code
+    const code = req.body.code;
     await Users.verifyEmail(id, code);
     res.status(200).send({ message: "Email verified succesfully!" });
   } catch (error) {

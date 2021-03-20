@@ -42,24 +42,25 @@ class EmailVerification extends Email {
     this.from = '"Imovel Finder - ShinodaLabs <noreply@shinodalabs.com.br>"';
     this.to = user.email;
     this.subject = "Email Verification";
-    this.text = `Olá,${user.name.split(" ")[1]}!
+    this.text = `Olá,${user.full_name.split(" ")[0]}!
 
     Sua conta no(a) Imóvel Finder está quase pronta. Abaixo está o código para ativar a sua conta.
     
-    Código: ${code}
+    Código: ${user.code_verification}
     
     Sua conta não será ativada até que seu email seja confirmado.
     
     Se você não se cadastrou no(a) Imóvel Finder recentemente, por favor ignore este email.`;
-    this.html = `Olá,${user.name.split(" ")[1]}!
+
+    this.html = `<h1>Olá,<b>${user.full_name.split(" ")[0]}</b>!</h1>
 
     Sua conta no(a) Imóvel Finder está quase pronta. Abaixo está o código para ativar a sua conta.
     
-    Código: ${user.code}
+    <h3>Código: ${user.code_verification}</h3>
     
-    Sua conta não será ativada até que seu email seja confirmado.
+    Sua conta não será ativada até que seu email seja confirmado.<br><br>
     
-    Se você não se cadastrou no(a) Imóvel Finder recentemente, por favor ignore este email.`;
+    <i>Se você não se cadastrou no(a) Imóvel Finder recentemente, por favor ignore este email.</i>`;
   }
 }
 
