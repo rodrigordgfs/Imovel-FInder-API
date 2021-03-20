@@ -10,21 +10,18 @@ function generateTokenJWT(user) {
   return token;
 }
 
-function generateAddress(rote, id) {
-  const baseUrl = `${process.env.BASE_URL}:${process.env.PORT}`;
-  return `${baseUrl}/${rote}/${id}`;
+function generateRandomCode() {
+  return Math.floor(100000 + Math.random() * 900000);
 }
 
 exports.create = async (req, res, next) => {
   try {
     const body = req.body;
+    const code = generateRandomCode();
+    Object.assign({}, body, { code_verification: code });
     const result = await Users.create(body);
     const token = generateTokenJWT(result.id);
-    const url = generateAddress(
-      "api-imovel-finder/users/verify-email",
-      result.id
-    );
-    const email = new EmailVerification(result, url);
+    const email = new EmailVerification(result);
     email.sendEmail().catch(console.log);
     res.set("Authorization", token).status(201).send(result);
   } catch (error) {
@@ -74,7 +71,8 @@ exports.logout = async (req, res, next) => {
 exports.updateVerifiedEmail = async (req, res, next) => {
   try {
     const id = req.params.id;
-    await Users.verifyEmail(id);
+    const code = req.body.code
+    await Users.verifyEmail(id, code);
     res.status(200).send({ message: "Email verified succesfully!" });
   } catch (error) {
     next(error);

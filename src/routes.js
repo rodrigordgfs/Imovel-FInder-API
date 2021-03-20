@@ -244,6 +244,15 @@ routes
     passport.authenticate("bearer", { session: false }),
     UsersController.logout
   )
+  .post(
+    "/api-imovel-finder/users/:id/verify-email",
+    celebrate({
+      [Segments.BODY]: Joi.object({
+        code: Joi.number().required()
+      }),
+    }),
+    UsersController.updateVerifiedEmail
+  )
   .patch(
     "/api-imovel-finder/users/:id",
     passport.authenticate("bearer", { session: false }),
@@ -260,10 +269,6 @@ routes
     "/api-imovel-finder/users/:id",
     passport.authenticate("bearer", { session: false }),
     UsersController.getByID
-  )
-  .get(
-    "/api-imovel-finder/users/verify-email/:id",
-    UsersController.updateVerifiedEmail
   );
 
 module.exports = { routes, errors };

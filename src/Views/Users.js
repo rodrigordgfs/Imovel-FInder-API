@@ -46,13 +46,14 @@ exports.getByID = async (id) => {
   return result;
 };
 
-exports.verifyEmail = async (id) => {
-  const isEmailVerified = await Users.findByPk(id, {
-    attributes: ["email_verified"],
+exports.verifyEmail = async (id, code) => {
+  const user = await Users.findByPk(id, {
+    attributes: ["email_verified", 'code_verification'],
   });
-  console.log(isEmailVerified);
-  if (isEmailVerified.email_verified) {
+  if (user.email_verified) {
     throw new AlreadyExists("Email already verified");
+  } else if (Number(user.code_verification) !== Number(code)) {
+    throw new AlreadyExists("Invalid verification code");
   }
   const body = { email_verified: true };
   return await Users.update(body, { where: { id } });

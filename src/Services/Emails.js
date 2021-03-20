@@ -37,13 +37,29 @@ class Email {
 }
 
 class EmailVerification extends Email {
-  constructor(user, urlAddress) {
+  constructor(user) {
     super();
     this.from = '"Imovel Finder - ShinodaLabs <noreply@shinodalabs.com.br>"';
     this.to = user.email;
     this.subject = "Email Verification";
-    this.text = `Olá! Verifique seu e-mail aqui: ${urlAddress}`;
-    this.html = `<h1>Olá!</h1> Verifique seu e-mail aqui: <a href="${urlAddress}">${urlAddress}</a>`;
+    this.text = `Olá,${user.name.split(" ")[1]}!
+
+    Sua conta no(a) Imóvel Finder está quase pronta. Abaixo está o código para ativar a sua conta.
+    
+    Código: ${code}
+    
+    Sua conta não será ativada até que seu email seja confirmado.
+    
+    Se você não se cadastrou no(a) Imóvel Finder recentemente, por favor ignore este email.`;
+    this.html = `Olá,${user.name.split(" ")[1]}!
+
+    Sua conta no(a) Imóvel Finder está quase pronta. Abaixo está o código para ativar a sua conta.
+    
+    Código: ${user.code}
+    
+    Sua conta não será ativada até que seu email seja confirmado.
+    
+    Se você não se cadastrou no(a) Imóvel Finder recentemente, por favor ignore este email.`;
   }
 }
 
