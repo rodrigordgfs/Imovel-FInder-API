@@ -1,17 +1,17 @@
 const nodemailer = require("nodemailer");
 
 const setupEmailDevelopment = (testAccount) => ({
-  host : "smtp.ethereal.email",
-  auth : testAccount,
+  host: "smtp.ethereal.email",
+  auth: testAccount,
 });
 
 const setupEmailProduction = {
-  host : process.env.HOST_EMAIL,
-  auth : {
-    user : process.env.USER_EMAIL,
-    pass : process.env.PASS_EMAIL,
+  host: process.env.HOST_EMAIL,
+  auth: {
+    user: process.env.USER_EMAIL,
+    pass: process.env.PASS_EMAIL,
   },
-  secure : true,
+  secure: true,
 };
 
 async function createSetupEmail() {
@@ -64,4 +64,4 @@ class EmailVerification extends Email {
   }
 }
 
-module.exports = {EmailVerification};
+module.exports = { EmailVerification };
