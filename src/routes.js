@@ -247,9 +247,7 @@ routes
   .post(
     "/api-imovel-finder/users/:id/verify-email",
     celebrate({
-      [Segments.BODY]: Joi.object({
-        code: Joi.number().required()
-      }),
+      [Segments.BODY]: Joi.object({ code: Joi.number().required() }),
     }),
     UsersController.updateVerifiedEmail
   )
@@ -271,4 +269,7 @@ routes
     UsersController.getByID
   );
 
-module.exports = { routes, errors };
+module.exports = {
+  routes,
+  errors,
+};

@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.addColumn("users", "code_verification", {
       type: Sequelize.INTEGER,
-      allowNull: true
+      allowNull: true,
     });
   },
 
