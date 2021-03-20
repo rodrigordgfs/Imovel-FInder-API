@@ -45,21 +45,21 @@ class EmailVerification extends Email {
     this.text = `Olá,${user.full_name.split(" ")[0]}!
 
     Sua conta no(a) Imóvel Finder está quase pronta. Abaixo está o código para ativar a sua conta.
-    
+
     Código: ${user.code_verification}
-    
+
     Sua conta não será ativada até que seu email seja confirmado.
-    
+
     Se você não se cadastrou no(a) Imóvel Finder recentemente, por favor ignore este email.`;
 
     this.html = `<h1>Olá,<b>${user.full_name.split(" ")[0]}</b>!</h1>
 
     Sua conta no(a) Imóvel Finder está quase pronta. Abaixo está o código para ativar a sua conta.
-    
+
     <h3>Código: ${user.code_verification}</h3>
-    
+
     Sua conta não será ativada até que seu email seja confirmado.<br><br>
-    
+
     <i>Se você não se cadastrou no(a) Imóvel Finder recentemente, por favor ignore este email.</i>`;
   }
 }
