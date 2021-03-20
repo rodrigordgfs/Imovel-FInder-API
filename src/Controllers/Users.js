@@ -19,7 +19,6 @@ exports.create = async (req, res, next) => {
     let body = req.body;
     const code = generateRandomCode();
     body = Object.assign({}, body, { code_verification: code });
-    console.log(body);
     const result = await Users.create(body);
     const token = generateTokenJWT(result.id);
     const email = new EmailVerification(result);
