@@ -228,8 +228,10 @@ routes
     celebrate({
       [Segments.BODY]: Joi.object({
         email: Joi.string().email().max(100).required(),
+        phone_number: Joi.string().max(20).required(),
         password: Joi.string().max(50).required(),
         full_name: Joi.string().max(100).required(),
+        verification_type: Joi.string().required(),
       }),
     }),
     UsersController.create

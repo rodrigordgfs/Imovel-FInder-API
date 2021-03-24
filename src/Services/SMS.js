@@ -11,9 +11,9 @@ class SMS {
 class SMSVerification extends SMS {
   constructor(user) {
     super();
-    this.body = `Your Imovel Finder verification code is ${user.code_verification}`;
     this.from = process.env.TWILIO_PHONE_NUMBER;
-    this.to = "+5551996236798";
+    this.body = `Your Imovel Finder verification code is ${user.code_verification}`;
+    this.to = `+${user.phone_number}`;
   }
 }
 

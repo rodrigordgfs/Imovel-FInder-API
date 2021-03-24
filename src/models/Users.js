@@ -6,10 +6,12 @@ class Users extends Model {
     super.init(
       {
         email: DataTypes.STRING(100),
+        phone_number: DataTypes.STRING(20),
         password_hash: DataTypes.STRING,
         full_name: DataTypes.STRING(100),
         email_verified: DataTypes.BOOLEAN,
         code_verification: DataTypes.NUMBER,
+        verification_type: DataTypes.ENUM("phone", "email"),
       },
       {
         sequelize,
