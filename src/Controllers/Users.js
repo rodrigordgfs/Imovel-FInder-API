@@ -1,6 +1,7 @@
 const Users = require("../Views/Users");
 const jwt = require("jsonwebtoken");
 const { EmailVerification } = require("../Services/Emails");
+const { SMSVerification } = require("../Services/SMS");
 
 function generateTokenJWT(user) {
   const payload = {
@@ -14,6 +15,19 @@ function generateRandomCode() {
   return Math.floor(100000 + Math.random() * 900000);
 }
 
+function verifyAccount(data) {
+  switch (data.dataValues.verification_type) {
+    case "phone":
+      const sms = new SMSVerification(data);
+      sms.sendSMS().catch(console.log());
+      break;
+    case "email":
+      const email = new EmailVerification(data);
+      email.sendEmail().catch(console.log);
+      break;
+  }
+}
+
 exports.create = async (req, res, next) => {
   try {
     let body = req.body;
@@ -21,9 +35,9 @@ exports.create = async (req, res, next) => {
     body = Object.assign({}, body, { code_verification: code });
     const result = await Users.create(body);
     const token = generateTokenJWT(result.id);
-    const email = new EmailVerification(result);
-    email.sendEmail().catch(console.log);
+    verifyAccount(result);
     delete result.dataValues.code_verification;
+    delete result.dataValues.verification_type;
     res.set("Authorization", token).status(201).send(result);
   } catch (error) {
     next(error);
