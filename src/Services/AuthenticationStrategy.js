@@ -28,7 +28,7 @@ passport.use(
       try {
         const user = await Users.findOne({
           where: { email },
-          attributes: ["id", "email", "password_hash"],
+          attributes: ["id", "email", "password_hash", "role"],
         });
         validateEmail(user);
         await validatePassword(password, user.password_hash);

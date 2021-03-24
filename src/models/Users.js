@@ -12,6 +12,7 @@ class Users extends Model {
         email_verified: DataTypes.BOOLEAN,
         code_verification: DataTypes.NUMBER,
         verification_type: DataTypes.ENUM("phone", "email"),
+        role: DataTypes.ENUM("admin", "user"),
       },
       {
         sequelize,

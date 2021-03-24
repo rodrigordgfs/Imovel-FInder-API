@@ -12,11 +12,13 @@ const AnnouncementPhotoController = require("./Controllers/AnnouncementPhotos");
 const AnnouncementContactsController = require("./Controllers/AnnouncementContacts");
 const UsersController = require("./Controllers/Users");
 
+const AuthenticationMiddleware = require("./middleware/authentication");
+
 // CHARACTERISTICS
 routes
   .post(
     "/api-imovel-finder/characteristics",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string().required(),
@@ -27,22 +29,22 @@ routes
   )
   .get(
     "/api-imovel-finder/characteristics",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     CharacteristicsController.getAll
   )
   .get(
     "/api-imovel-finder/characteristics/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     CharacteristicsController.getByID
   )
   .delete(
     "/api-imovel-finder/characteristics/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     CharacteristicsController.delete
   )
   .patch(
     "/api-imovel-finder/characteristics/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string(),
@@ -56,7 +58,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/property-types",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string().required(),
@@ -68,22 +70,22 @@ routes
   )
   .get(
     "/api-imovel-finder/property-types",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     PropertyTypesController.getAll
   )
   .get(
     "/api-imovel-finder/property-types/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     PropertyTypesController.getByID
   )
   .delete(
     "/api-imovel-finder/property-types/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     PropertyTypesController.delete
   )
   .patch(
     "/api-imovel-finder/property-types/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         name: Joi.string(),
@@ -98,7 +100,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/announcements",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         title: Joi.string().max(70).required(),
@@ -120,7 +122,7 @@ routes
   )
   .patch(
     "/api-imovel-finder/announcements/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         title: Joi.string().max(70),
@@ -142,17 +144,17 @@ routes
   )
   .get(
     "/api-imovel-finder/announcements/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     AnnouncementsController.getByID
   )
   .get(
     "/api-imovel-finder/announcements",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     AnnouncementsController.getAll
   )
   .delete(
     "/api-imovel-finder/announcements/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     AnnouncementsController.delete
   );
 
@@ -160,7 +162,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/announcements/:id/characteristic",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         characteristic_id: Joi.number().required(),
@@ -170,7 +172,7 @@ routes
   )
   .delete(
     "/api-imovel-finder/announcements/:announcement_id/characteristic/:characteristic_id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     AnnouncementsController.unlinkCharacteristic
   );
 
@@ -178,7 +180,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/announcements/:announcement_id/photo",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         url: Joi.string().uri().required(),
@@ -188,7 +190,7 @@ routes
   )
   .delete(
     "/api-imovel-finder/announcements/:announcement_id/photo/:announcement_photo_id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     AnnouncementPhotoController.delete
   );
 
@@ -196,7 +198,7 @@ routes
 routes
   .post(
     "/api-imovel-finder/announcements/:announcement_id/contact",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         full_name: Joi.string().max(60).required(),
@@ -209,7 +211,7 @@ routes
   )
   .patch(
     "/api-imovel-finder/announcements/:announcement_id/contact",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         full_name: Joi.string().max(60),
@@ -238,12 +240,12 @@ routes
   )
   .post(
     "/api-imovel-finder/users/login",
-    passport.authenticate("local", { session: false }),
+    AuthenticationMiddleware.local,
     UsersController.login
   )
   .post(
     "/api-imovel-finder/users/logout/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     UsersController.logout
   )
   .post(
@@ -255,7 +257,7 @@ routes
   )
   .patch(
     "/api-imovel-finder/users/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     celebrate({
       [Segments.BODY]: Joi.object({
         email: Joi.string().email().max(100),
@@ -267,7 +269,7 @@ routes
   )
   .get(
     "/api-imovel-finder/users/:id",
-    passport.authenticate("bearer", { session: false }),
+    AuthenticationMiddleware.bearer,
     UsersController.getByID
   );
 
